@@ -1,0 +1,295 @@
+# =============================================================================
+# TAPROX — Production Root .gitignore
+# Network Visibility, Packet Intelligence & Web Security Testing Platform
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# 1. Desktop Application Shell (Retained locally, excluded from public repo)
+# -----------------------------------------------------------------------------
+/apps/desktop/
+apps/desktop/
+apps/desktop/**
+
+# -----------------------------------------------------------------------------
+# 2. Test Suites, Test Directories & Test Artifacts (Excluded from Public Repo)
+# -----------------------------------------------------------------------------
+backend/tests/
+apps/**/tests/
+apps/**/__tests__/
+apps/dashboard/src/test/
+tests/
+test/
+**/tests/
+**/test/
+**/__tests__/
+
+# Co-located unit and integration test files
+*.test.ts
+*.test.tsx
+*.test.js
+*.test.jsx
+*.spec.ts
+*.spec.tsx
+test_*.py
+*_test.py
+
+# Test reports, runners, and coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage/
+.vitest-cache/
+**/node_modules/.vite/vitest/
+test-results/
+test-reports/
+junit*.xml
+*.test.log
+
+# -----------------------------------------------------------------------------
+# 3. Environment Files, Secrets & Cryptographic Keys
+# -----------------------------------------------------------------------------
+# Local environment variables and secrets (never commit runtime credentials)
+.env
+.env.*
+*.env
+*.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# Private keys, certificates, keystores, and credentials
+*.key
+*.pem
+*.pfx
+*.p12
+*.pkcs12
+*.kdbx
+*.jks
+*.keystore
+*.der
+*.crt
+*.cer
+
+# Local credentials and secret dumps
+secrets.json
+secrets.yaml
+secrets.yml
+credentials.json
+credentials.yaml
+credentials.yml
+passwords.txt
+local-settings.json
+api-keys.json
+
+# -----------------------------------------------------------------------------
+# 4. Python & FastAPI Backend
+# -----------------------------------------------------------------------------
+# Bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Packaging, builds, and wheels
+build/
+**/build/
+dist/
+**/dist/
+*.egg-info/
+*.egg
+eggs/
+develop-eggs/
+parts/
+var/
+sdist/
+wheels/
+pip-wheel-metadata/
+
+# Explicitly preserve required Python configuration, lockfiles & build specs
+!.python-version
+!pyproject.toml
+!backend/pyproject.toml
+!uv.lock
+!backend/uv.lock
+!requirements*.txt
+!backend/packaging/tapnettrack-backend.spec
+
+# -----------------------------------------------------------------------------
+# 5. Node.js, Frontend (React 19, Vite, Tailwind CSS 4) & TypeScript
+# -----------------------------------------------------------------------------
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Package manager caches
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Vite, TypeScript, and bundler caches
+.vite/
+*.tsbuildinfo
+
+# Package manager logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Explicitly preserve dependency lockfiles and public branding assets
+!package-lock.json
+!pnpm-lock.yaml
+!yarn.lock
+!apps/dashboard/public/**
+!apps/dashboard/public/*.png
+!apps/dashboard/public/*.svg
+
+# -----------------------------------------------------------------------------
+# 6. Tauri 2, Rust & Native Tooling (Build Caches)
+# -----------------------------------------------------------------------------
+target/
+**/target/
+**/src-tauri/target/
+**/src-tauri/gen/
+*.rs.bk
+
+# Explicitly preserve Cargo.lock if retained locally
+!Cargo.lock
+!**/Cargo.lock
+
+# -----------------------------------------------------------------------------
+# 7. SQLite & Runtime Database Files
+# -----------------------------------------------------------------------------
+/data/
+data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*.db.bak
+*.sqlite.bak
+*.sqlite3.bak
+
+# Database backup directories
+backups/
+**/data/backups/
+
+# -----------------------------------------------------------------------------
+# 8. Packet Captures, Dump Files & Network Artifacts
+# -----------------------------------------------------------------------------
+*.pcap
+*.pcapng
+*.cap
+*.dmp
+*.dump
+*.raw
+*.etl
+**/data/capture/
+capture/
+captures/
+
+# -----------------------------------------------------------------------------
+# 9. Investigations, Evidence Vault, Forensics & Reports
+# -----------------------------------------------------------------------------
+*.tapbundle
+*.tapvault
+*.casebundle
+*.evidence
+**/data/evidence/
+**/data/investigations/
+**/data/vault/
+**/data/exports/
+**/data/reports/
+
+# -----------------------------------------------------------------------------
+# 10. Runtime Logs, PIDs & Temporary Files
+# -----------------------------------------------------------------------------
+*.log
+logs/
+**/data/logs/
+*.pid
+*.seed
+*.pid.lock
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+*.orig
+*.rej
+
+# -----------------------------------------------------------------------------
+# 11. IDE, Operating System & Developer Workspace Files
+# -----------------------------------------------------------------------------
+# macOS artifacts
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows artifacts
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux artifacts
+.fuse_hidden*
+.directory
+.Trash-*
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Sublime Text & Eclipse
+*.sublime-workspace
+*.sublime-project
+.project
+.classpath
+.settings/
+
+# Agent progress, local assistant scratch & worktrees
+.superpowers/
+.kiro/scratch/
+
+# -----------------------------------------------------------------------------
+# 12. Release Staging & Distribution Bundles
+# -----------------------------------------------------------------------------
+/dist/release/
+dist/release/
+*.sig
+*.sha256

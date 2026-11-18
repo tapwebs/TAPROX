@@ -1,0 +1,128 @@
+@import "@fontsource-variable/inter";
+@import "tailwindcss";
+
+/*
+ * TAPROX Official Crimson Black Cybersecurity Design System.
+ * Deep black background, dark charcoal panels, subtle borders,
+ * authoritative crimson accent, and semantic status indicators.
+ * Strict contrast ratios:
+ *   fg (#F2F2F4) on canvas (#0A0A0C): ~18.5:1 (AAA)
+ *   fg-muted (#8A8A94) on canvas (#0A0A0C): ~5.8:1 (AA)
+ *   line-strong (#383842) controls: >= 3:1 non-text contrast.
+ */
+@theme {
+  --color-*: initial;
+
+  /* Surfaces: Official TAPROX Crimson Black Palette */
+  --color-canvas: #0a0a0c;          /* --bg-primary: Application background */
+  --color-inset: #0f0f13;           /* Recessed inner surfaces */
+  --color-surface: #141418;         /* --bg-secondary: Cards, panels & sidebar */
+  --color-raised: #19191f;          /* --bg-elevated: Elevated surfaces */
+  --color-card: #1e1e25;            /* --bg-hover: Hover states */
+
+  /* Edges: fine dark charcoal borders */
+  --color-line: #26262c;            /* --border-primary: Standard borders */
+  --color-line-strong: #383842;     /* Strong borders & control edges */
+
+  /* Text: crisp primary text & muted secondary text */
+  --color-fg: #f2f2f4;              /* --text-primary: Main text */
+  --color-fg-muted: #8a8a94;        /* --text-secondary: Muted text */
+  --color-fg-subtle: #686873;       /* Subtle metadata text */
+
+  /* Brand accent: authoritative Crimson */
+  --color-accent: #e5203a;          /* --accent-primary: Primary crimson accent */
+  --color-accent-strong: #ff3b4e;   /* --accent-glow: Accent highlights & focus */
+  --color-accent-deep: #7a0f1e;     /* --accent-deep: Deep crimson */
+  --color-on-accent: #ffffff;       /* Crisp text on crimson */
+  --color-link: #8ba9b8;            /* Technical link text */
+
+  /* Semantic status: sophisticated operational colors (PRESERVED) */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-critical: #e5203a;
+  --color-neutral: #8a8a94;
+
+  /* Crimson Cyber Operations Center tokens */
+  --color-ops-bg: #0a0a0c;
+  --color-ops-card: #141418;
+  --color-ops-border: #26262c;
+  --color-ops-crimson: #e5203a;
+  --color-ops-crimson-start: #ff3b4e;
+  --color-ops-crimson-end: #7a0f1e;
+  --color-ops-text: #f2f2f4;
+  --color-ops-muted: #8a8a94;
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, "Liberation Mono", monospace;
+
+  /* Crisp, technical corners */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+}
+
+@layer base {
+  :root {
+    --bg-primary: #0a0a0c;
+    --bg-secondary: #141418;
+    --bg-elevated: #19191f;
+    --bg-hover: #1e1e25;
+    --border-primary: #26262c;
+    --accent-primary: #e5203a;
+    --accent-glow: #ff3b4e;
+    --accent-deep: #7a0f1e;
+    --text-primary: #f2f2f4;
+    --text-secondary: #8a8a94;
+    --accent-gradient: linear-gradient(135deg, #ff3b4e 0%, #7a0f1e 100%);
+  }
+
+  html {
+    color-scheme: dark;
+    background: var(--color-canvas);
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-canvas);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 0.875rem; /* 14px: dense but readable for technical data */
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+  }
+
+  /* One visible, high-contrast focus indicator for every interactive element */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  /* Subtle bespoke scrollbars for dense workstation tables & views */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-canvas);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-line-strong);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

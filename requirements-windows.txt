@@ -1,0 +1,62 @@
+# TAPNETTRACK — Windows Environment & Dependency Checklist
+
+This checklist specifies the operating system, build tools, external runtime utilities, permissions, and network boundaries required to run or develop TAPNETTRACK on Windows.
+
+---
+
+## 1. Operating System & Architecture
+- [x] **Windows Version:** Windows 10 (version 22H2 or newer) or Windows 11 (64-bit).
+- [x] **Architecture:** `x64` (`x86_64-pc-windows-msvc`). Windows ARM64 or 32-bit x86 are not supported in Phase 7.
+- [x] **User Permissions:** Standard un-elevated user account. **Do not run TAPNETTRACK as Administrator** (least privilege security model).
+
+---
+
+## 2. Runtimes & Interpreters (Source / Development Mode)
+*Note: Users running the pre-packaged installer (`TAPNETTRACK_0.1.0_x64-setup.exe`) do not need Python, Node.js, or Rust.*
+
+- [x] **Python:** Version `>= 3.12` (recommended: 3.12.10).
+  - Verify: `python --version`
+  - Ensure "Add Python to PATH" was checked during installation.
+- [x] **Node.js & npm:** Node `>= 22.12.0` (LTS; tested on v24.14.1), npm `>= 10.9.0` (tested on 11.13.0).
+  - Verify: `node -v` and `npm -v`
+- [x] **Rust Toolchain (Desktop Shell Compilation):**
+  - Rust `>= 1.85.0` (tested on 1.99.1) with `x86_64-pc-windows-msvc` target.
+  - Microsoft C++ Build Tools (Visual Studio 2022 Build Tools with "Desktop development with C++").
+  - Verify: `rustc --version` and `cargo --version`
+
+---
+
+## 3. Webview Runtime (Desktop UI Display)
+- [x] **Microsoft Edge WebView2 Runtime:**
+  - Status: Pre-installed on Windows 11 and current Windows 10 machines.
+  - Installer fallback: Embedded offline in installer via `MicrosoftEdgeWebView2RuntimeInstallerX64.exe` (`v1.3.315.17`).
+  - Registry verification:
+    `HKLM\SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}` (property: `pv`)
+
+---
+
+## 4. Packet Capture & Protocol Dissection (Optional for Packet Explorer)
+*The app starts, runs device discovery, builds topologies, analyzes web endpoints, and manages investigations WITHOUT Wireshark or Npcap. These tools are strictly required only for live packet capturing and PCAPNG dissection in Packet Explorer.*
+
+- [ ] **Wireshark (`dumpcap.exe` & `tshark.exe`):**
+  - Minimum supported version: `>= 4.2.0` (tested on 4.6.9).
+  - Default installation path: `C:\Program Files\Wireshark\`.
+  - Required tools:
+    - `C:\Program Files\Wireshark\dumpcap.exe` (un-elevated packet capture)
+    - `C:\Program Files\Wireshark\tshark.exe` (packet dissection and display filters)
+- [ ] **Npcap Packet Capture Driver:**
+  - Minimum supported version: `>= 1.70` (tested on 1.90).
+  - Driver library path: `C:\Windows\System32\Npcap\wpcap.dll`.
+  - **Critical Setup Option:** Do **NOT** enable *"Restrict Npcap driver's access to Administrators only"*. If enabled, standard users cannot capture packets without UAC prompts.
+
+---
+
+## 5. Storage & Process Security
+- [x] **Data Directory:** `%LOCALAPPDATA%\TAPNETTRACK\` (`tapnettrack.db`, `backups/`, `investigations/`, `logs/backend.log`).
+- [x] **Port Binding:** Local loopback `127.0.0.1` only. Random ephemeral port selected on startup with `SO_EXCLUSIVEADDRUSE` to prevent port hijacking.
+- [x] **Process Supervision:** Parent Tauri desktop shell spawns child backend with Windows Job Object (`JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`) and stdin-EOF watchdog. Zero orphan processes remain on window close.
+- [x] **Environment Variables (Optional):**
+  - `TAPNETTRACK_BACKEND_PYTHON`: Path to custom Python executable (Debug builds only).
+  - `TAPNETTRACK_BACKEND_DIR`: Path to backend directory (Debug builds only).
+  - *Both variables are structurally compiled out and ignored in release builds.*
+

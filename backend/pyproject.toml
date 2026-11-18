@@ -1,0 +1,65 @@
+[project]
+name = "tapnettrack-backend"
+version = "0.1.0"
+description = "TAPNETTRACK local backend: authenticated loopback API, SQLite storage, capture prerequisite detection."
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.162.0",
+    "uvicorn==0.54.0",
+    "sqlalchemy==2.1.8",
+    "alembic==1.20.1",
+    "cryptography>=50.0.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==9.2.0",
+    "httpx2==2.16.0",
+    "ruff==0.17.3",
+    "mypy==2.4.1",
+    "pyinstaller>=6.22.3",
+]
+
+[tool.uv]
+# The backend is run in place (`python -m app`); it is not installed as a distribution yet.
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra --strict-markers"
+filterwarnings = ["error"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["app/database/migrations/versions"]
+
+[tool.ruff.lint]
+# S = bandit-derived security rules, B = bugbear, UP = pyupgrade, SIM = simplifications
+select = ["E", "F", "I", "B", "UP", "S", "SIM", "ASYNC", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+# user-facing messages are long sentences
+"app/services/capture/*.py" = ["E501"]
+"app/services/flows/*.py" = ["E501"]
+"app/services/detection/*.py" = ["E501"]
+"app/schemas/flows.py" = ["E501"]
+"app/schemas/behaviour.py" = ["E501"]
+"app/api/v1/behaviour.py" = ["E501"]
+"app/services/topology/*.py" = ["E501"]
+"app/services/web_inspector/*.py" = ["E501"]
+"app/services/web_inspector/analyzers/*.py" = ["E501"]
+"app/schemas/topology.py" = ["E501"]
+"app/api/v1/topology.py" = ["E501"]
+"app/models/detection.py" = ["E501"]
+"tests/fake_tools/*.py" = ["UP031", "SIM115"]
+"tests/**" = ["S101", "S603", "S607", "E501"]  # long literals in fixtures are fine
+# A manual report script: long message lines, asserts for its own invariants, fixed 0.0.0.0 default.
+"scripts/verify_phase1_windows.py" = ["E501", "S101", "S104"]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+files = ["app", "tests", "scripts"]
+exclude = ["app/database/migrations/versions/", "tests/fake_tools/"]

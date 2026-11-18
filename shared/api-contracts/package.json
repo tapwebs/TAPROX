@@ -1,0 +1,25 @@
+{
+  "name": "@tapnettrack/api-contracts",
+  "private": true,
+  "version": "0.1.0",
+  "description": "API contract shared by backend and frontend. openapi.json is generated from the FastAPI app; schema.d.ts is generated from openapi.json.",
+  "type": "module",
+  "types": "./schema.d.ts",
+  "exports": {
+    ".": {
+      "types": "./schema.d.ts"
+    }
+  },
+  "files": [
+    "openapi.json",
+    "schema.d.ts"
+  ],
+  "scripts": {
+    "generate": "openapi-typescript openapi.json -o schema.d.ts --empty-objects-unknown",
+    "check": "openapi-typescript openapi.json -o schema.check.d.ts --empty-objects-unknown && node ../../scripts/compare-files.mjs schema.d.ts schema.check.d.ts"
+  },
+  "devDependencies": {
+    "openapi-typescript": "7.13.0",
+    "typescript": "5.9.3"
+  }
+}
